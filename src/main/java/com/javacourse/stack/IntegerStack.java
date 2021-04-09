@@ -34,7 +34,7 @@ public class IntegerStack {
 		else{
 			arraySize++;
 			Integer[] newArray = new Integer[arraySize];
-			System.arraycopy(stackArray,0,newArray,0,arraySize);
+			System.arraycopy(stackArray,0,newArray,0,arraySize - 1 );
 			stackArray = new Integer[arraySize];
 			System.arraycopy(newArray,0,stackArray,0,arraySize);
 		}
