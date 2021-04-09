@@ -27,9 +27,12 @@ public class IntegerStack {
 	 * @param item добавляемый целочисленный элемент
 	 */
 	public void push(Integer item) {
-		head++;
-		stackArray[head] = item;
-		throw new RuntimeException("Method not implemented");
+		if(head != arraySize - 1) {
+			head++;
+			stackArray[head] = item;
+		}
+		else throw new RuntimeException("Method not implemented");
+
 	}
 
 	/**
