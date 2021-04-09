@@ -3,11 +3,20 @@ package com.javacourse.stack;
 
 public class IntegerStack {
 
+	private int arraySize = 10;
+
+	private Integer[] stackArray;
+
+	public String arrayName;
+
+	private int head;
+
 	/**
 	 * Конструктор без аргументов должен создаавать валидный стек
 	 */
 	public IntegerStack(){
-
+		stackArray = new Integer[arraySize];
+		head = -1;
 	}
 
 	/**
@@ -18,7 +27,8 @@ public class IntegerStack {
 	 * @param item добавляемый целочисленный элемент
 	 */
 	public void push(Integer item) {
-		// TODO: замените тело метода на полноценную реализацию
+		head++;
+		stackArray[head] = item;
 		throw new RuntimeException("Method not implemented");
 	}
 
@@ -32,8 +42,11 @@ public class IntegerStack {
 	 * @return значение элемента который был извлечен из стека
 	 */
 	public Integer pop() {
-		// TODO: замените тело метода на полноценную реализацию
-		throw new RuntimeException("Method not implemented");
+		if(head != -1){
+			head--;
+			return stackArray[head];
+		}
+		else throw new RuntimeException("Method not implemented");
 	}
 
 	/**
@@ -48,7 +61,7 @@ public class IntegerStack {
 	 * @return значение элемента на вершине стека
 	 */
 	public Integer peek() {
-		// TODO: замените тело метода на полноценную реализацию
-		throw new RuntimeException("Method not implemented");
+		if(head != -1) {return stackArray[head];}
+		else throw new RuntimeException("Method not implemented");
 	}
 }
