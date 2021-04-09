@@ -31,7 +31,15 @@ public class IntegerStack {
 			head++;
 			stackArray[head] = item;
 		}
-		else throw new RuntimeException("Method not implemented");
+		else{
+			arraySize++;
+			Integer[] newArray = new Integer[arraySize];
+			System.arraycopy(stackArray,0,newArray,0,arraySize);
+			stackArray = new Integer[arraySize];
+			System.arraycopy(newArray,0,stackArray,0,arraySize);
+		}
+
+		throw new RuntimeException("Method not implemented");
 
 	}
 
