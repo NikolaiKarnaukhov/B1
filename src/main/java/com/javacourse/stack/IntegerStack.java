@@ -74,5 +74,8 @@ public class IntegerStack {
 	public Integer peek() {
 		if(head != -1) {return stackArray[head];}
 		else throw new RuntimeException("Method not implemented");
+
+
+
 	}
 }
