@@ -4,11 +4,8 @@ package com.javacourse.stack;
 public class IntegerStack {
 
 	private int arraySize = 10;
-
 	private Integer[] stackArray;
-
 	public String arrayName;
-
 	private int head;
 
 	/**
@@ -32,14 +29,17 @@ public class IntegerStack {
 			stackArray[head] = item;
 		}
 		else{
+			head++;
 			arraySize++;
 			Integer[] newArray = new Integer[arraySize];
 			System.arraycopy(stackArray,0,newArray,0,arraySize - 1 );
+			stackArray = null;
 			stackArray = new Integer[arraySize];
 			System.arraycopy(newArray,0,stackArray,0,arraySize);
+			stackArray[head] = item;
 		}
 
-		throw new RuntimeException("Method not implemented");
+		//throw new RuntimeException("Method not implemented");
 
 	}
 
@@ -53,11 +53,25 @@ public class IntegerStack {
 	 * @return значение элемента который был извлечен из стека
 	 */
 	public Integer pop() {
-		if(head != -1){
-			head--;
-			return stackArray[head];
+		if (head == -1) {
+			throw new RuntimeException("Empty Stack Exception");
 		}
-		else throw new RuntimeException("Method not implemented");
+		if (head == 0) {
+			Integer temp = stackArray[0];
+			stackArray = null;
+			return  temp;
+		}
+		else{
+			Integer temp = stackArray[head];
+			arraySize--;
+			head--;
+			Integer[] newArray = new Integer[arraySize];
+			System.arraycopy(stackArray,0,newArray,0,arraySize);
+			stackArray = null;
+			stackArray = new Integer[arraySize];
+			System.arraycopy(newArray,0,stackArray,0,arraySize);
+			return temp;
+		}
 	}
 
 	/**
@@ -71,11 +85,10 @@ public class IntegerStack {
 	 *
 	 * @return значение элемента на вершине стека
 	 */
+
 	public Integer peek() {
 		if(head != -1) {return stackArray[head];}
-		else throw new RuntimeException("Method not implemented");
-
-
-
+		else throw new RuntimeException("Empty Stack Exception");
 	}
+
 }
