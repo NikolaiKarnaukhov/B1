@@ -164,4 +164,18 @@ class IntegerStackTest {
 		IntStream.range(0, limit)
 		         .forEach(i -> assertThat(stack.pop()).isEqualTo(limit - i - 1));
 	}
+
+	@Test
+	void pushAfterPopAll() {
+		IntegerStack stack = new IntegerStack();
+		stack.push(1);
+		stack.push(2);
+		stack.push(3);
+		stack.pop();
+		stack.pop();
+		stack.pop();
+		stack.push(4);
+		assertThat(stack.pop()).isEqualTo(4);
+		assertThrows(RuntimeException.class, stack::pop);
+	}
 }

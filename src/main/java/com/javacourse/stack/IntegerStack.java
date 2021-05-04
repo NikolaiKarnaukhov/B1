@@ -5,7 +5,6 @@ public class IntegerStack {
 
 	private int arraySize = 10;
 	private Integer[] stackArray;
-	public String arrayName;
 	private int head;
 
 	/**
@@ -24,6 +23,10 @@ public class IntegerStack {
 	 * @param item добавляемый целочисленный элемент
 	 */
 	public void push(Integer item) {
+		if(head == -1){
+			arraySize++;
+			stackArray = new Integer[arraySize];
+		}
 		if(head != arraySize - 1) {
 			head++;
 			stackArray[head] = item;
@@ -34,13 +37,9 @@ public class IntegerStack {
 			Integer[] newArray = new Integer[arraySize];
 			System.arraycopy(stackArray,0,newArray,0,arraySize - 1 );
 			stackArray = null;
-			stackArray = new Integer[arraySize];
-			System.arraycopy(newArray,0,stackArray,0,arraySize);
-			stackArray[head] = item;
+			newArray[head] = item;
+			stackArray = newArray;
 		}
-
-		//throw new RuntimeException("Method not implemented");
-
 	}
 
 	/**
@@ -57,6 +56,8 @@ public class IntegerStack {
 			throw new RuntimeException("Empty Stack Exception");
 		}
 		if (head == 0) {
+			arraySize--;
+			head --;
 			Integer temp = stackArray[0];
 			stackArray = null;
 			return  temp;
@@ -68,8 +69,7 @@ public class IntegerStack {
 			Integer[] newArray = new Integer[arraySize];
 			System.arraycopy(stackArray,0,newArray,0,arraySize);
 			stackArray = null;
-			stackArray = new Integer[arraySize];
-			System.arraycopy(newArray,0,stackArray,0,arraySize);
+			stackArray = newArray;
 			return temp;
 		}
 	}
