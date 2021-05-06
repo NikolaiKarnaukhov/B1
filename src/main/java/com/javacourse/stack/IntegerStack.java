@@ -3,7 +3,7 @@ package com.javacourse.stack;
 
 public class IntegerStack {
 
-	private int arraySize = 10;
+	private int arraySize = 0;
 	private Integer[] stackArray;
 	private int head;
 
@@ -33,9 +33,9 @@ public class IntegerStack {
 		}
 		else{
 			head++;
-			arraySize++;
+			arraySize = arraySize + 5;
 			Integer[] newArray = new Integer[arraySize];
-			System.arraycopy(stackArray,0,newArray,0,arraySize - 1 );
+			System.arraycopy(stackArray,0,newArray,0,arraySize - 5 );
 			stackArray = null;
 			newArray[head] = item;
 			stackArray = newArray;
