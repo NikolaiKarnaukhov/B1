@@ -6,6 +6,7 @@ public class IntegerStack {
 	private int arraySize = 0;
 	private Integer[] stackArray;
 	private int head;
+	private int difference = 10;
 
 	/**
 	 * Конструктор без аргументов должен создаавать валидный стек
@@ -33,9 +34,9 @@ public class IntegerStack {
 		}
 		else{
 			head++;
-			arraySize = arraySize + 5;
+			arraySize = arraySize + difference;
 			Integer[] newArray = new Integer[arraySize];
-			System.arraycopy(stackArray,0,newArray,0,arraySize - 5 );
+			System.arraycopy(stackArray,0,newArray,0,arraySize - difference );
 			stackArray = null;
 			newArray[head] = item;
 			stackArray = newArray;
@@ -64,13 +65,21 @@ public class IntegerStack {
 		}
 		else{
 			Integer temp = stackArray[head];
-			arraySize--;
 			head--;
-			Integer[] newArray = new Integer[arraySize];
-			System.arraycopy(stackArray,0,newArray,0,arraySize);
-			stackArray = null;
-			stackArray = newArray;
-			return temp;
+
+			if(arraySize % difference == 0)
+			{
+				arraySize--;
+				Integer[] newArray = new Integer[arraySize];
+				System.arraycopy(stackArray,0,newArray,0,arraySize);
+				stackArray = null;
+				stackArray = newArray;
+				return temp;
+			}
+			else{
+				arraySize--;
+				return temp;
+			}
 		}
 	}
 
