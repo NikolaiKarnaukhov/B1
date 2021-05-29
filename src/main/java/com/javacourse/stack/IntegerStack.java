@@ -99,21 +99,16 @@ public class IntegerStack {
 			Integer temp = stackArray[head];
 			head--;
 
-			if(temp == minElem){
-				minElem = stackArray[0];
+			if(temp == maxElem || temp == minElem){
+				if(temp == maxElem) maxElem = stackArray[0];
+				if(temp == minElem) minElem = stackArray[0];
+
 				for(int i=0; i<head+1;i++){
-					if(stackArray[i] == null){i++;continue;}
+					if(stackArray[i] == null) continue;
 					else{
-						if(stackArray[i]<minElem) {minElem = stackArray[i];}
-						i++;}
-				}
-			}
-			if(temp == maxElem){
-				maxElem = stackArray[0];
-				for(int i=0; i<head+1;i++){
-					if(stackArray[i] == null){i++;continue;}
-					else
-					{if(stackArray[i]>maxElem) {maxElem = stackArray[i];}}
+						if(stackArray[i]>maxElem) maxElem = stackArray[i];
+						if(stackArray[i]<minElem) minElem = stackArray[i];
+					}
 				}
 			}
 
