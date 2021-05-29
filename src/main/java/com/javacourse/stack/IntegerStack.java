@@ -6,7 +6,7 @@ public class IntegerStack {
 	private int arraySize = 0;
 	private Integer[] stackArray;
 	private int head;
-	private int difference = 10;
+	private int difference = 10 ;
 
 	/**
 	 * Конструктор без аргументов должен создаавать валидный стек
