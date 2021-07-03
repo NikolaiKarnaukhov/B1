@@ -1,13 +1,17 @@
 package com.javacourse.stack;
 
+import java.net.InetSocketAddress;
 
 public class IntegerStack {
 
 	private int arraySize = 0;
-	private Integer[] stackArray;
 	private int head;
 	private int difference = 10;
 	private Integer minElem, maxElem;
+
+	private Integer[] stackArray;
+	private Integer[] trackMin;
+	private Integer[] trackMax;
 
 	/**
 	 * Конструктор без аргументов должен создаавать валидный стек
@@ -36,40 +40,88 @@ public class IntegerStack {
 	public void push(Integer item) {
 		if(head == -1){
 			arraySize++;
+			head++;
+
 			stackArray = new Integer[arraySize];
+			trackMin = new Integer[arraySize];
+			trackMax = new Integer[arraySize];
+
 			stackArray[0] = item;
+			trackMin[0] = item;
+			trackMax[0] =item;
+
 			minElem = stackArray[0];
 			maxElem = stackArray[0];
 		}
-		if(head != arraySize - 1) {
-			head++;
-			stackArray[head] = item;
-			if (item != null) {
-				if (item > maxElem) {
-					maxElem = item;
-				}
-				if (item < minElem) {
-					minElem = item;
-				}
-			}
-		}
-		else{
-			if (item != null) {
-				if (item > maxElem) {
-					maxElem = item;
-				}
-				if (item < minElem) {
-					minElem = item;
-				}
-			}
-			head++;
-			arraySize = arraySize + difference;
-			Integer[] newArray = new Integer[arraySize];
-			System.arraycopy(stackArray,0,newArray,0,arraySize - difference );
-			stackArray = null;
-			newArray[head] = item;
-			stackArray = newArray;
+		else {
+			if (head != arraySize - 1) {
+				head++;
+				stackArray[head] = item;
 
+				if (item != null) {
+					if (item > maxElem) {
+						maxElem = item;
+						trackMax[head] = maxElem;
+					} else {
+						trackMax[head] = maxElem;
+					}
+
+					if(item < minElem){
+						minElem = item;
+						trackMin[head] = minElem;
+					}
+					else{
+						trackMin[head] = minElem;
+					}
+				}
+				else{
+					trackMin[head] = minElem;
+					trackMax[head] = maxElem;
+				}
+			}
+			else {
+				head++;
+				arraySize = arraySize + difference;
+
+				Integer[] newArray = new Integer[arraySize];
+				Integer[] newtrackMax = new Integer[arraySize];
+				Integer[] newtrackMin = new Integer[arraySize];
+
+				System.arraycopy(stackArray, 0, newArray, 0, arraySize - difference);
+				System.arraycopy(trackMax, 0,newtrackMax,0,arraySize - difference);
+				System.arraycopy(trackMin, 0,newtrackMin,0,arraySize - difference);
+
+				stackArray = null;
+				trackMax = null;
+				trackMin = null;
+
+				newArray[head] = item;
+				if (item != null) {
+					if (item > maxElem) {
+						maxElem = item;
+						newtrackMax[head] = maxElem;
+					} else {
+						newtrackMax[head] = maxElem;
+					}
+
+					if(item < minElem){
+						minElem = item;
+						newtrackMin[head] = minElem;
+					}
+					else{
+						newtrackMin[head] = minElem;
+					}
+				}
+				else{
+					newtrackMin[head] = minElem;
+					newtrackMax[head] = maxElem;
+				}
+
+				stackArray = newArray;
+				trackMax = newtrackMax;
+				trackMin = newtrackMin;
+
+			}
 		}
 	}
 
@@ -88,41 +140,54 @@ public class IntegerStack {
 		}
 		if (head == 0) {
 			arraySize--;
-			head --;
+			head--;
+
 			Integer temp = stackArray[0];
+
 			stackArray = null;
+			trackMax = null;
+			trackMin = null;
+
 			minElem = null;
 			maxElem = null;
+
+
 			return  temp;
 		}
 		else{
 			Integer temp = stackArray[head];
 			head--;
 
-			if(temp == maxElem || temp == minElem){
-				if(temp == maxElem) maxElem = stackArray[0];
-				if(temp == minElem) minElem = stackArray[0];
-
-				for(int i=0; i<head+1;i++){
-					if(stackArray[i] == null) continue;
-					else{
-						if(stackArray[i]>maxElem) maxElem = stackArray[i];
-						if(stackArray[i]<minElem) minElem = stackArray[i];
-					}
-				}
-			}
-
 			if(arraySize % difference == 0)
 			{
 				arraySize--;
+
 				Integer[] newArray = new Integer[arraySize];
+				Integer[] newtrackMax = new Integer[arraySize];
+				Integer[] newtrackMin = new Integer[arraySize];
+
 				System.arraycopy(stackArray,0,newArray,0,arraySize);
+				System.arraycopy(trackMax,0,newtrackMax,0,arraySize);
+				System.arraycopy(trackMin,0,newtrackMin,0,arraySize);
+
 				stackArray = null;
+				trackMax = null;
+				trackMin = null;
+
 				stackArray = newArray;
+				trackMax = newtrackMax;
+				trackMin = newtrackMin;
+
+				maxElem = trackMax[head];
+				minElem = trackMin[head];
 				return temp;
 			}
 			else{
 				arraySize--;
+
+				maxElem = trackMax[head];
+				minElem = trackMin[head];
+
 				return temp;
 			}
 		}
